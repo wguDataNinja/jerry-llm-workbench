@@ -29,6 +29,12 @@ _internal/*.local.md
 # Benchmark artifacts
 experiments/*/data/raw/*
 !experiments/*/data/raw/.gitkeep
+
+# Benchmark results
+# Default: keep result CSVs local, except explicit shared outputs.
 experiments/*/results/*
 !experiments/*/results/.gitkeep
 !experiments/*/results/run_manifest.csv
+!experiments/*/results/shared/
+!experiments/*/results/shared/.gitkeep
+!experiments/*/results/shared/*.csv

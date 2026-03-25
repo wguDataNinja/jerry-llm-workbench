@@ -2,6 +2,22 @@
 
 This benchmark uses a sample derived from the **USA Real Estate Dataset**.
 
+## Experiment in one paragraph
+This experiment tests local `llama3` listing summarization quality on a 50-row St. Augustine sold-listing sample (`ZIP 32092`) with `low/mid/high` price bands. The goal is not perfect scoring yet; it is to quickly surface obvious model errors, awkward phrasing, and factual mistakes before expanding to more models and larger samples.
+
+## Current run and review focus
+- Run tracking file: `results/run_manifest.csv`
+- Completed Buddy full run ID: `20260325_184959__llama3_latest__Buddy-MacBook`
+- Buddy shared output CSV: `results/shared/buddy_llama3_v0_full50.csv`
+- Next step: Jerry runs the same benchmark input with any installed local model and machine tag.
+
+When reviewing outputs, flag anything silly or wrong:
+- invented facts not in row fields
+- wrong location, status, or price
+- contradictory statements (for example sold + active phrasing)
+- repetitive or boilerplate language
+- overconfident tone when key fields are missing
+
 ## Origin
 
 Source:
@@ -117,7 +133,8 @@ python3 experiments/listing_summary__kaggle_usa_real_estate_dataset/runner/run_l
   --prompt-file experiments/listing_summary__kaggle_usa_real_estate_dataset/prompts/listing_summary_v0.txt \
   --machine "Buddy-MacBook" \
   --operator "Buddy" \
-  --model llama3:latest
+  --model llama3:latest \
+  --output-csv experiments/listing_summary__kaggle_usa_real_estate_dataset/results/shared/buddy_llama3_v0_full50.csv
 ```
 
 ### Run other installed models
@@ -128,7 +145,8 @@ python3 experiments/listing_summary__kaggle_usa_real_estate_dataset/runner/run_l
   --prompt-file experiments/listing_summary__kaggle_usa_real_estate_dataset/prompts/listing_summary_v0.txt \
   --machine "Jerry-Machine" \
   --operator "Jerry" \
-  --model qwen2.5-coder:7b
+  --model <model_name> \
+  --output-csv experiments/listing_summary__kaggle_usa_real_estate_dataset/results/shared/jerry_<model_slug>_v0_full50.csv
 ```
 
 ## Run manifest
@@ -138,7 +156,8 @@ Each completed run appends one row to:
 
 Repo policy:
 - `results/run_manifest.csv` can be committed for run traceability.
-- Per-run result CSV files in `results/` stay local by default.
+- Shareable benchmark result CSVs should go in `results/shared/` and can be committed.
+- Ad-hoc/scratch result CSVs in `results/` (outside `shared/`) stay local by default.
 
 Captured metadata:
 - run id
