@@ -9,6 +9,7 @@ This experiment tests local `llama3` listing summarization quality on a 50-row S
 - Run tracking file: `results/run_manifest.csv`
 - Completed Buddy full run ID: `20260325_184959__llama3_latest__Buddy-MacBook`
 - Buddy shared output CSV: `results/shared/buddy_llama3_v0_full50.csv`
+- Buddy LLM-as-judge review: `results/shared/reviews/llama3_buddy_full50_llm_judge_v1.md`
 - Next step: Jerry runs the same benchmark input with any installed local model and machine tag.
 
 When reviewing outputs, flag anything silly or wrong:
@@ -190,6 +191,16 @@ python3 experiments/listing_summary__kaggle_usa_real_estate_dataset/runner/compa
 
 Output:
 - `results/run_comparison.csv`
+
+## LLM-as-judge grading artifacts
+
+Store human/LLM grading notes in:
+- `results/shared/reviews/`
+
+Current artifact:
+- `results/shared/reviews/llama3_buddy_full50_llm_judge_v1.md`
+
+After Jerry runs, add a parallel review file (same rubric structure) so model and machine outputs can be compared directly.
 
 ## Repo handling policy
 
