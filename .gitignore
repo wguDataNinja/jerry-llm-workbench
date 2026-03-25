@@ -25,3 +25,10 @@ Thumbs.db
 # Logs and local artifacts
 *.log
 _internal/*.local.md
+
+# Benchmark artifacts
+experiments/*/data/raw/*
+!experiments/*/data/raw/.gitkeep
+experiments/*/results/*
+!experiments/*/results/.gitkeep
+!experiments/*/results/run_manifest.csv

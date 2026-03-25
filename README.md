@@ -8,6 +8,60 @@ This repo is meant to get Jerry operational quickly in an agent-assisted coding 
 
 Local Ollama setup comes first. Hosted APIs come later.
 
+## Important: Data Access Boundary (Near-Term Policy)
+This is a high-priority planning item for all benchmark work.
+
+- Sensitive data should stay out of this repo.
+- Only public, masked or anonymized data should be added to this repo for benchmark development and testing.
+- External APIs and external coding agents (including Codex, Claude Code, and hosted model endpoints) should not receive sensitive data.
+- Local Ollama models will be the path wired to sensitive local data.
+- This is an intentional planning direction now; implementation details and enforcement will be finalized later.
+
+## Benchmarking Direction (Minimal Scope)
+The benchmark goal is a minimal, repeatable setup to compare Ollama models against each other first, then optionally against external baselines on masked data only.
+
+- Keep benchmark artifacts under `experiments/` only.
+- Use one experiment slug per task + dataset: `listing_summary__<dataset_slug>`.
+- Start with one small sample (20 to 50 rows) for fast repeated runs.
+- Hold off on complex evaluation tooling until first clean runs exist.
+
+## Current Experiment (Active)
+Current benchmark in progress:
+- `experiments/listing_summary__kaggle_usa_real_estate_dataset`
+- Task: listing summarization on a 50-row sample (`ZIP 32092`, `sold`, `price_band=low|mid|high`)
+- Model path: local Ollama only
+
+Current collaboration flow:
+1. Buddy runs the full 50-row benchmark locally.
+2. Buddy pushes repo updates.
+3. Jerry refreshes repo and runs the same benchmark command locally.
+4. Compare runs via the manifest and comparison script.
+
+Jerry repo refresh command:
+
+```bash
+git pull origin main
+```
+
+Jerry benchmark run command:
+
+```bash
+python3 experiments/listing_summary__kaggle_usa_real_estate_dataset/runner/run_listing_summary_benchmark.py \
+  --input-csv experiments/listing_summary__kaggle_usa_real_estate_dataset/data/samples/st_augustine_32092_sold__benchmark_input_v0.csv \
+  --prompt-file experiments/listing_summary__kaggle_usa_real_estate_dataset/prompts/listing_summary_v0.txt \
+  --model llama3:latest \
+  --machine "Jerry-Machine" \
+  --operator "Jerry"
+```
+
+## Agent Operating Rules
+Use [AGENTS.md](AGENTS.md) as the working policy.
+
+- Agents must operate inside this repo only unless explicit authorization is provided.
+- Keep good Git hygiene: small scoped commits, clear commit messages, and no destructive history edits.
+- Maintain a running development log in [_internal/dev_log.md](_internal/dev_log.md).
+- Every log entry should include machine, user, and agent sign-off context.
+
 ## Access And Collaboration
 - The repo stays public at first.
 - Jerry can read and clone it publicly without a GitHub account.
@@ -195,8 +249,10 @@ jerry-llm-workbench/
 ├─ templates/
 │  ├─ buddy-system-profile.md
 │  └─ jerry-system-profile.md
+├─ AGENTS.md
 └─ _internal/
    ├─ repo-spec.md
+   ├─ dev_log.md
    └─ setup-log.md
 ```
 
@@ -228,6 +284,7 @@ jerry-llm-workbench/
 - [ ] Run first local smoke tests
 - [ ] Fill out `templates/jerry-system-profile.md`
 - [ ] Record setup notes in `_internal/setup-log.md`
+- [ ] Record agent session notes in `_internal/dev_log.md`
 - [ ] Make first proof-of-life commit
 - [ ] Create GitHub account when ready to push and collaborate
 
@@ -236,3 +293,52 @@ jerry-llm-workbench/
 - Push Jerry's first commit and start collaboration
 - Make the repo private and share access properly
 - Add hosted API keys later only when local workflow is stable
+
+## Benchmark Plan (Working Draft)
+This is a working plan for the first benchmark area. It is intentionally lightweight and will be refined after data inspection.
+
+### Naming
+Use one nameslug per benchmark in this pattern:
+
+```text
+listing_summary__<dataset_slug>
+```
+
+Planned first slug:
+
+```text
+listing_summary__kaggle_usa_real_estate_dataset
+```
+
+### Directory Shape
+
+```text
+jerry-llm-workbench/
+└── experiments/
+    └── listing_summary__kaggle_usa_real_estate_dataset/
+        ├── README.md
+        ├── data/
+        │   ├── raw/
+        │   └── samples/
+        ├── prompts/
+        ├── runner/
+        └── results/
+```
+
+### Minimal Work Sequence
+1. Create `experiments/listing_summary__kaggle_usa_real_estate_dataset/` and the baseline subfolders.
+2. Download the Kaggle dataset into `data/raw/` unchanged.
+3. Inspect fields before writing prompts or runner logic.
+4. Build one small sample in `data/samples/` (target: St. Augustine, FL, 20 to 50 rows).
+5. Add one prompt and one runner script.
+6. Save outputs under `results/`.
+
+### Candidate Kaggle Dataset
+Likely candidates to verify and pin:
+
+- `ahmedshahriarsakib/usa-real-estate-dataset`
+- `austinreese/usa-housing-listings`
+
+Recommended default for first pass: `ahmedshahriarsakib/usa-real-estate-dataset` because it directly matches the "USA Real Estate Dataset" naming used in prior planning notes.
+
+Use this source-identifying slug so benchmark folders remain unambiguous as more datasets are added.
