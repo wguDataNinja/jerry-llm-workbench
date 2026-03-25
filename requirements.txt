@@ -1,0 +1,2 @@
+# Intentionally minimal for day-1 setup.
+# Add packages as workflows grow.
