@@ -16,7 +16,7 @@
 - VS Code version: 1.113.0
 - Primary coding agent (Codex or Claude Code): Claude Code
 - Additional coding tools (Copilot, etc.): none yet
-- GitHub username: (not yet configured)
+- GitHub username: bearclawbob
 
 ## Local Model Setup
 - Ollama version: 0.18.2
