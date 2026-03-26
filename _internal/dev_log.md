@@ -23,6 +23,29 @@ Use this log for agent-assisted coding sessions.
 
 ## Session Log
 
+### 2026-03-25 (Local)
+- Machine: DESKTOP-NGVG1SS (Jerry's machine)
+- User: Jerry
+- Agent: Claude Code
+- Scope: First proof-of-life setup — clone, bootstrap, smoke tests.
+- Changes Made:
+  - .env: Changed OLLAMA_DEFAULT_MODEL from qwen2.5-coder:7b to llama3:latest (model not installed)
+  - templates/jerry-system-profile.md: Filled out Jerry's machine and toolchain profile
+  - _internal/setup-log.md: Added 2026-03-25 setup entry
+  - _internal/dev_log.md: Added this session entry
+- Validation:
+  - scripts/system_check.py: 7 passed, 0 warnings
+  - scripts/ollama_model_list.py: 3 models listed (llama3:latest, llama3:70b, gpt-oss:20b)
+  - scripts/ollama_hello.py: successful response from llama3:latest
+- Risks / Follow-Ups:
+  - GitHub account needed before pushing
+  - Benchmark run ready: llama3:latest installed and tested
+- Sign-off:
+  - User: Jerry
+  - Agent: Claude Code
+
+
+
 ### 2026-03-25 17:30 (Local)
 - Machine: Buddy's MacBook
 - User: Buddy
