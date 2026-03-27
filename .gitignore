@@ -38,3 +38,5 @@ experiments/*/results/*
 !experiments/*/results/shared/
 !experiments/*/results/shared/.gitkeep
 !experiments/*/results/shared/*.csv
+!experiments/*/results/shared/reviews/
+!experiments/*/results/shared/reviews/*.md
